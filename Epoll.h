@@ -7,9 +7,9 @@
 class Epoll
 {
 public:
-	// TODO : ÎªÊ²Ã´ÕâÀï±ØĞëÎªstatic, ÎªÊ²Ã´_tInstance±ØĞëÎªstatic?
-	// ÒòÎª¾²Ì¬º¯Êı¶ÀÁ¢ÓÚ¶ÔÏó´æÔÚ£¬ ÆäÄÚ²¿²»ÄÜ´æÔÚ°üº¬thisÖ¸ÕëµÄ¶ÔÏó£¬Ö»ÄÜÓÉstatic¶ÔÏó
-	// ¾²Ì¬³ÉÔ±º¯ÊıÊôÓÚÀà±¾Éí£¬¶ø²»ÊôÓÚÀàµÄ¶ÔÏó
+	// TODO : ä¸ºä»€ä¹ˆè¿™é‡Œå¿…é¡»ä¸ºstatic, ä¸ºä»€ä¹ˆ_tInstanceå¿…é¡»ä¸ºstatic?
+	// å› ä¸ºé™æ€å‡½æ•°ç‹¬ç«‹äºå¯¹è±¡å­˜åœ¨ï¼Œ å…¶å†…éƒ¨ä¸èƒ½å­˜åœ¨åŒ…å«thisæŒ‡é’ˆçš„å¯¹è±¡ï¼Œåªèƒ½ç”±staticå¯¹è±¡
+	// é™æ€æˆå‘˜å‡½æ•°å±äºç±»æœ¬èº«ï¼Œè€Œä¸å±äºç±»çš„å¯¹è±¡
 	static Epoll& getInstance();
 	void addEvent(int iFd, int iState);
 	void deleteEvent(int iFd, int iState);
@@ -17,19 +17,22 @@ public:
 	void poll();
 
 private:
-	// µ¥ÀıÄ£Ê½ÒâÎ¶×Åclass²»ÄÜ±»ËûÈË´´½¨¡¢¸´ÖÆ¡¢¿½±´£¨class of 3)
+	// å•ä¾‹æ¨¡å¼æ„å‘³ç€classä¸èƒ½è¢«ä»–äººåˆ›å»ºã€å¤åˆ¶ã€æ‹·è´ï¼ˆclass of 3)
 	Epoll();
 	Epoll(const Epoll& rhs);
 	Epoll& operator=(const Epoll& rhs);
 	int _iEpollFd;
-	static Epoll* _tInstance = NULL;	//ÔÚÕâÀï³õÊ¼»¯£¿
+	//static Epoll* _tInstance = NULL;	//åœ¨è¿™é‡Œåˆå§‹åŒ–ï¼Ÿ ----ä¸å¯ä»¥åœ¨ç±»çš„å†…éƒ¨åˆå§‹åŒ–éconstexpré™æ€æˆå‘˜
+	static Epoll* _tInstance;
 	static const int iInitEventListSize = 16;
 	
 	typedef std::vector<struct epoll_event> vEventArray;
 
 	EventArray _tEvents;
 
-	//TODO : ¿¼ÂÇ¶àÏß³ÌµÄÇé¿ö£¬ ´Ë´¦Ó¦¸Ã¼ÓËø
+	//TODO : è€ƒè™‘å¤šçº¿ç¨‹çš„æƒ…å†µï¼Œ æ­¤å¤„åº”è¯¥åŠ é”
 };
+
+Epoll::_tInstance = NULL;			//åœ¨è¿™é‡Œå®šä¹‰?å¯å¦?
 
 #endif

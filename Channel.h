@@ -14,8 +14,8 @@ class Channel
 public:
 	Channel();
 	explicit Channel(int fd);
-	virtual ~Channel();
-	virtual void handleRead();
+	virtual ~Channel();		//如果base class没有定义一个析构函数
+	virtual void handleRead();		
 	void handleWrite();
 
 	void setReadCB(Callback cb)			//允许user设置回调, 便于外部实现
